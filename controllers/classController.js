@@ -1,3 +1,4 @@
+/*
 const config = require("../config/database");
 const User = require("../models/user");
 
@@ -128,3 +129,4 @@ module.exports = {
     );
   },
 };
+*/

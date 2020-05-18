@@ -1,3 +1,4 @@
+/*
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const config = require("../config/database");
@@ -63,3 +64,4 @@ module.exports.comparePassword = function (candidatePassword, hash, callback) {
     callback(null, isMatch);
   });
 };
+*/
