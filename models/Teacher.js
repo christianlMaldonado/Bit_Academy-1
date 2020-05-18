@@ -6,8 +6,8 @@ const TeacherSchema = mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
   email: { type: String, required: true, lowercase: true },
-  student: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
-  // school: { type: Schema.Types.ObjectId, ref: "School" },
+  student: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
+  // school: { type: mongoose.Schema.Types.ObjectId, ref: "School" },
 });
 
 const Teacher = (module.exports = mongoose.model("Teacher", TeacherSchema));

@@ -10,6 +10,7 @@ module.exports = {
       username: req.body.name,
       email: req.body.email,
       password: req.body.password,
+      student: [],
     });
 
     Teacher.addTeacher(newUser, (err, user) => {
@@ -38,7 +39,7 @@ module.exports = {
           });
           res.json({
             success: true,
-            token: "bearer " + token,
+            token: `bearer ${token}`,
             user: {
               id: user._id,
               username: user.username,
@@ -59,19 +60,28 @@ module.exports = {
       email: req.body.email,
       username: req.body.username,
       password: req.body.password,
+      teacher: req.body.teacherId,
     });
 
-    Student.addStudent(newStudent, (err, user) => {
+    Student.addStudent(newStudent, (err, student) => {
       if (err) {
         res.json({ success: false, msg: "Failed to add student" });
       } else {
-        res.json({ success: true, msg: "Student added successfully" });
+        student.teacher = newStudent.teacher;
+        Teacher.findOne(newStudent.teacher, (err, teacher) => {
+          if (err) throw err;
+          teacher.student.push(student._id);
+          teacher.save((err, teacher) => {
+            if (err) throw err;
+            res.json({ success: true, msg: "Student added successfully" });
+          });
+        });
       }
     });
   },
   addClasswork: function (req, res) {
     Student.updateMany(
-      { isStudent: true },
+      {},
       {
         $push: {
           classWork: {
@@ -84,10 +94,12 @@ module.exports = {
             },
           },
         },
+      },
+      (err, homework) => {
+        if (err) throw err;
+        res.json({ success: true, msg: "classwork added" });
       }
-    ).then(function (homework) {
-      res.json({ success: true, msg: homework + " added" });
-    });
+    );
   },
   gradeAssignment: function (req, res) {
     const homework = {
@@ -112,7 +124,7 @@ module.exports = {
         if (!student) {
           return res.json({ success: false, msg: "Student not found" });
         } else {
-          student.student.schoolWork.forEach((element) => {
+          student.student.classWork.forEach((element) => {
             if (element.assignment.name === homework.assignment) {
               element.assignment.grade = homework.grade;
             }

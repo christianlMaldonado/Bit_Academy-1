@@ -30,7 +30,7 @@ module.exports.getStudentById = function (id, callback) {
 
 module.exports.getStudentByEmail = function (email, callback) {
   const query = { email: email };
-  User.findOne(query, callback);
+  Student.findOne(query, callback);
 };
 
 module.exports.addStudent = function (newUser, callback) {

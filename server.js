@@ -10,12 +10,13 @@ const app = express();
 const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
-const users = require("./routes/users");
-const classroom = require("./routes/classroom");
-const PORT = process.env.PORT || 5001;
+const teachers = require("./routes/teachers");
+const students = require("./routes/students");
+const PORT = process.env.PORT || 4200;
 
 const person = {};
 io.on("connection", (socket) => {
+  console.log(person);
   if (!person[socket.id]) {
     person[socket.id] = socket.id;
   }
@@ -58,8 +59,8 @@ app.use(passport.session());
 
 require("./config/passport")(passport);
 
-app.use("/users", users);
-app.use("/classroom", classroom);
+app.use("/teacher", teachers);
+app.use("/student", students);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
@@ -75,5 +76,5 @@ app.get("*", (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log("server on http://localhost:" + PORT);
+  console.log(`🌏 server on http://localhost:${PORT}`);
 });
