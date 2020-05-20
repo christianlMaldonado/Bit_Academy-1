@@ -1,14 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/teachersController");
-const passport = require("passport");
+const passportTeacher = require("passport");
 
 // teacher routes to login and register
 router.route("/register").post(controller.create);
 
 router.route("/auth").post(controller.authentication);
 
-router.get("/profile", passport.authenticate("teacher", { session: false }), controller.profile);
+router.get(
+  "/profile",
+  passportTeacher.authenticate("teacher", { session: false }),
+  controller.profile
+);
 
 // classroom routes for teachers
 router.route("/addStudent").post(controller.createStudent);

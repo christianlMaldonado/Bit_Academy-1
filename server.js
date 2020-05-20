@@ -2,7 +2,8 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 const cors = require("cors");
-const passport = require("passport");
+const passportTeacher = require("passport");
+const passportStudent = require("passport");
 const mongoose = require("mongoose");
 const config = require("./config/database");
 
@@ -54,10 +55,16 @@ mongoose.connection.on("error", (err) => {
 app.use(cors());
 app.use(express.json());
 
-app.use(passport.initialize());
-app.use(passport.session());
+// initialize teacher session
+app.use(passportTeacher.initialize());
+app.use(passportTeacher.session());
 
-require("./config/passport")(passport);
+// initialize student session
+app.use(passportStudent.initialize());
+app.use(passportStudent.session());
+
+require("./config/passport")(passportTeacher);
+require("./config/passport")(passportStudent);
 
 app.use("/teacher", teachers);
 app.use("/student", students);

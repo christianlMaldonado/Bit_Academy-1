@@ -34,7 +34,16 @@ module.exports = {
     });
   },
   profile: function (req, res) {
-    res.json({ user: req.user });
+    res.json({
+      student: {
+        id: req.user._id,
+        username: req.user.username,
+        email: req.user.email,
+        teacher: req.user.teacher,
+        attendance: req.user.attendance,
+        classWork: req.user.classWork,
+      },
+    });
   },
   submitClasswork: function (req, res) {
     Student.findOneAndUpdate(
@@ -63,7 +72,7 @@ module.exports = {
     const studentName = req.body.student;
     Student.findOne({ username: studentName }, (err, student) => {
       if (err) throw err;
-      res.json({ student });
+      res.json({ classwork: student.classWork });
     });
   },
   attendance: function (req, res) {

@@ -53,7 +53,14 @@ module.exports = {
     });
   },
   profile: function (req, res) {
-    res.json({ user: req.user });
+    res.json({
+      teacher: {
+        students: req.user.student,
+        id: req.user._id,
+        username: req.user.username,
+        email: req.user.email,
+      },
+    });
   },
   createStudent: function (req, res) {
     let newStudent = new Student({
