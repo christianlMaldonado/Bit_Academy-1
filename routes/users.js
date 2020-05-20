@@ -1,3 +1,4 @@
+/*
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/usersController");
@@ -10,3 +11,4 @@ router.route("/auth").post(controller.authentication);
 router.get("/profile", passport.authenticate("jwt", { session: false }), controller.profile);
 
 module.exports = router;
+*/

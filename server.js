@@ -2,7 +2,8 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 const cors = require("cors");
-const passport = require("passport");
+const passportTeacher = require("passport");
+const passportStudent = require("passport");
 const mongoose = require("mongoose");
 const config = require("./config/database");
 
@@ -10,12 +11,13 @@ const app = express();
 const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
-const users = require("./routes/users");
-const classroom = require("./routes/classroom");
-const PORT = process.env.PORT || 5001;
+const teachers = require("./routes/teachers");
+const students = require("./routes/students");
+const PORT = process.env.PORT || 4200;
 
 const person = {};
 io.on("connection", (socket) => {
+  console.log(person);
   if (!person[socket.id]) {
     person[socket.id] = socket.id;
   }
@@ -53,13 +55,19 @@ mongoose.connection.on("error", (err) => {
 app.use(cors());
 app.use(express.json());
 
-app.use(passport.initialize());
-app.use(passport.session());
+// initialize teacher session
+app.use(passportTeacher.initialize());
+app.use(passportTeacher.session());
 
-require("./config/passport")(passport);
+// initialize student session
+app.use(passportStudent.initialize());
+app.use(passportStudent.session());
 
-app.use("/users", users);
-app.use("/classroom", classroom);
+require("./config/passport")(passportTeacher);
+require("./config/passport")(passportStudent);
+
+app.use("/teacher", teachers);
+app.use("/student", students);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
@@ -75,5 +83,5 @@ app.get("*", (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log("server on http://localhost:" + PORT);
+  console.log(`🌏 server on http://localhost:${PORT}`);
 });

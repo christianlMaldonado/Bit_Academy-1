@@ -1,3 +1,4 @@
+/*
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/classController");
@@ -18,3 +19,4 @@ router.route("/submitHomework").post(controller.submitLink);
 router.route("/attendance").get(controller.checkAttendance).put(controller.attendance);
 
 module.exports = router;
+*/

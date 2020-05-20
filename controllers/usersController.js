@@ -1,3 +1,4 @@
+/*
 // const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const config = require("../config/database");
@@ -57,3 +58,4 @@ module.exports = {
     res.json({ user: req.user });
   },
 };
+*/
