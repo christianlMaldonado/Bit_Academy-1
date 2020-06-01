@@ -4,6 +4,9 @@
   "private": true,
   "proxy": "http://localhost:4200/",
   "dependencies": {
+    "@material-ui/core": "^4.10.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.54",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -11,9 +14,15 @@
     "@types/node": "^12.12.39",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "firebase": "^7.14.5",
+    "icons": "^1.0.0",
+    "material": "^0.4.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "simple-peer": "^9.7.2",
+    "styled-components": "^5.1.1",
     "typescript": "^3.7.5"
   },
   "scripts": {
