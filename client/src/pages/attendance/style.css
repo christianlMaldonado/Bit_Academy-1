@@ -1,10 +1,10 @@
 .attendance {
-  background-color: rgb(191, 215, 236);
+  background-color: rgb(255, 255, 255);
   height: 100%;
   text-align: center;
   padding-top: 8vh;
   padding-bottom: 5vh;
-  margin-left: -18vw;
+  margin-left: -8vw;
   width: 100vw;
   margin-top: -2vh;
 }
@@ -14,8 +14,8 @@
   font-size: 12px;
   min-width: 64px;
   box-sizing: border-box;
-  background-color: rgb(117, 143, 165);
-  border: 2px rgb(117, 143, 165) solid;
+  background-color: rgb(113, 142, 146) !important;
+  border: 2px rgb(113, 142, 146) solid !important;
   color: white;
   font-weight: 500;
   line-height: 1.75;

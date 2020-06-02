@@ -48,7 +48,7 @@ input[type="email"]:not(.browser-default):focus:not([read-only]) {
 
 input[type="email"]:not(.browser-default) {
   border-color: lightgray !important;
-  font-family: "Raleway", sans-serif !important;
+  font-family: "Manrope", sans-serif;
 }
 
 .MuiFormLabel-root.Mui-focused {

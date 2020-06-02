@@ -1,35 +1,41 @@
-@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@600&display=swap");
 
-.nav {
-  left: 0;
-  height: 102% !important;
-  width: 80px !important;
-  background-color: rgb(149, 184, 212);
-  position: fixed;
+.bitAcademy {
+  width: 100%;
+  height: 100px;
+  background-color: rgb(113, 142, 146);
+}
+
+.title-logo {
+  width: 30%;
+  margin-left: 35%;
+  margin-top: 4vh;
+}
+
+.web-nav {
+  height: 70px !important;
+  width: 100% !important;
+  background-color: rgb(255, 255, 255);
   z-index: 4;
-  transition: width 0.1s ease !important;
   text-align: center;
+  padding-top: 3px;
 }
 
 .fa {
-  text-align: center;
-  color: white;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  padding-right: 30px;
-}
-
-.nav:hover {
-  width: 200px !important;
+  color: rgb(141, 141, 141);
+  font-size: 20px;
 }
 
 */ ul {
-  list-style-type: none;
-  margin-left: 60px;
+  font-family: "Manrope", sans-serif;
 }
 
 a {
   text-decoration: none;
+}
+
+ul {
+  margin-top: 0px !important;
 }
 
 ul:not(.browser-default) > li {
@@ -37,54 +43,22 @@ ul:not(.browser-default) > li {
 }
 
 li {
-  padding-top: 10px;
-  padding-left: 30px;
-  padding-bottom: 10px;
+  padding: 20px 20px;
   font-size: 16px;
+  display: inline-block;
+  color: rgb(141, 141, 141);
 }
 
 li:hover {
-  background-color: rgb(141, 176, 204) !important;
-}
-
-.addedLink {
-  font-family: "Raleway", sans-serif;
-}
-
-@keyframes scroll-right {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-.logout {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-}
-
-.sidenav {
-  display: none;
+  background-color: rgb(238, 238, 238);
 }
 
 @media only screen and (max-width: 1025px) {
-  .nav {
+  .web-nav {
     display: none;
   }
 
-  .sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
+  .bitAcademy {
+    display: none;
   }
 }

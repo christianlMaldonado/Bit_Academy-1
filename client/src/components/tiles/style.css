@@ -1,7 +1,6 @@
 .home-tile {
   width: 23vw;
   margin-left: 5vw;
-  margin-top: 2%;
   margin-bottom: 20px;
   float: left;
   color: white;
@@ -11,12 +10,14 @@
 
 .tile-image {
   width: 100%;
+  border-radius: 10%;
 }
 
 .overlay {
   text-align: center;
   padding-top: 28%;
   transition: 0.5s ease;
+  border-radius: 10%;
 }
 
 .home-tile .overlay {
@@ -30,22 +31,24 @@
   transition: 3s ease;
   font-size: 30px;
   animation-name: change;
-  animation-duration: 1s;
+  animation-duration: 0.4s;
+  border-radius: 10%;
 }
 
 .home-tile:hover .overlay {
   display: inline;
-  background: rgb(85, 116, 141);
+  background: rgb(113, 142, 146);
   position: absolute;
   height: 98.5%;
+  border-radius: 10%;
 }
 
 @keyframes change {
   0% {
-    background-color: rgb(85, 116, 141, 0);
+    background-color: rgba(85, 116, 141, 0);
   }
   100% {
-    background-color: rgb(85, 116, 141);
+    background-color: rgb(113, 142, 146);
   }
 }
 
