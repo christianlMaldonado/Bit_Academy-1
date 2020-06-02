@@ -33,7 +33,6 @@ function App() {
         <Navbar />
         <Mobile />
       </div>
-      <Route exact path="/home" component={Home} />
       <Route exact path="/grades" component={Grades} />
       <Route exact path="/attendance" component={Attendance} />
       <Route exact path="/assignments" component={Assignments} />
@@ -47,6 +46,7 @@ function App() {
       <Router>
         <div>
           <Switch>
+            <Route exact path="/home" component={Home} />
             <Route exact path="/" component={LoginContainer} />
             <Route exact path="/register" component={Register} />
             <Authenticated>

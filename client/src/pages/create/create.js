@@ -109,12 +109,6 @@ class Create extends Component {
       return !this.state.user.isStudent ? (
         <>
           <div className="title">
-            {" "}
-            <img
-              alt="logo"
-              className="logo-size"
-              src={process.env.PUBLIC_URL + "/images/ramLogo.png"}
-            ></img>{" "}
             <span className="top-title-create">Create</span>
           </div>
           <div className="container">

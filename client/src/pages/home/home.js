@@ -32,26 +32,34 @@ class Home extends Component {
     let topTitle;
     if (this.state.user !== undefined) {
       topTitle = topTitle = (
-        <span className="top-title-home"> Welcome, {this.state.user.username} </span>
+        <span className="top-title-home">
+          {" "}
+          Welcome, {this.state.user.username}{" "}
+        </span>
       );
       return (
         <div className="home">
           <div className="title">
             {" "}
-            <img
-              alt="logo"
-              className="logo-size"
-              src={process.env.PUBLIC_URL + "/images/ramLogo.png"}
-            ></img>{" "}
             <span className="top-title-home">{topTitle} </span>
           </div>
           <div className="container">
             {!this.state.user.isStudent
               ? this.state.home.map((data) => (
-                  <Tiles key={data.id} url={data.url} name={data.name} image={data.image} />
+                  <Tiles
+                    key={data.id}
+                    url={data.url}
+                    name={data.name}
+                    image={data.image}
+                  />
                 ))
               : this.state.stuHome.map((data) => (
-                  <Tiles key={data.id} url={data.url} name={data.name} image={data.image} />
+                  <Tiles
+                    key={data.id}
+                    url={data.url}
+                    name={data.name}
+                    image={data.image}
+                  />
                 ))}
           </div>
         </div>

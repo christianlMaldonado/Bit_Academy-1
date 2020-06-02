@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@600&display=swap");
 
 .MuiAvatar-root {
   background-color: rgb(119, 147, 172) !important;
@@ -21,7 +21,7 @@
   width: 40% !important;
   float: right;
   margin-right: 5vw !important;
-  font-family: "Raleway", sans-serif !important;
+  font-family: "Manrope", sans-serif;
 }
 
 input {
@@ -40,7 +40,7 @@ input[type="text"]:not(.browser-default) {
 }
 
 button {
-  font-family: "Raleway", sans-serif !important;
+  font-family: "Manrope", sans-serif;
 }
 
 .MuiFormLabel-root.Mui-focused {
@@ -77,7 +77,7 @@ button {
 .formHead {
   color: rgb(119, 147, 172);
   font-size: 30px !important;
-  font-family: "Raleway", sans-serif !important;
+  font-family: "Manrope", sans-serif;
   justify-content: center !important;
   margin-right: 1vw !important;
 }

@@ -22,5 +22,11 @@
     "name": "Create",
     "url": "/create",
     "image": "create.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Attendance",
+    "url": "/attendance",
+    "image": "calendar.jpg"
   }
 ]
