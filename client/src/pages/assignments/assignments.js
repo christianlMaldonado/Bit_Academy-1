@@ -272,6 +272,7 @@ class Assignments extends Component {
                       <DialogActions>
                         <Button onClick={this.handleCloseDialog}>Cancel</Button>
                         <Button
+                          disabled={this.state.user.username === "Guest User"}
                           onClick={() =>
                             this.submitGrade({
                               username: this.state.studentName,

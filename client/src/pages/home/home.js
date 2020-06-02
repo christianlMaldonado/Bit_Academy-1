@@ -17,7 +17,7 @@ class Home extends Component {
     if (!jwt) {
       this.props.history.push("/");
     }
-    API.userPortal(jwt)
+    API.teacherPortal(jwt)
       .then((res) => {
         this.setState({
           user: res.data.user,
