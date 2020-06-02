@@ -28,5 +28,11 @@
     "name": "Attendance",
     "url": "/attendance",
     "image": "calendar.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Virtual Field Trip",
+    "url": "/fieldtrip",
+    "image": "virtualfieldtrip.jpg"
   }
 ]

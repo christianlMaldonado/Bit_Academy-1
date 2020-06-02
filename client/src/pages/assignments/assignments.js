@@ -146,9 +146,7 @@ class Assignments extends Component {
     if (this.state.user !== undefined) {
       return (
         <>
-          <div className="title">
-            <span className="top-title">Assignments</span>
-          </div>
+          <div className="title"></div>
           <div className="container">
             <div className="assignments">
               <div className="table-container">

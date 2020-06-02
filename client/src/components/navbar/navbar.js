@@ -44,7 +44,12 @@ class Navbar extends Component {
             </a>
             <a href="/virtual">
               <li>
-                <i className="fa fa-comments"></i>&nbsp; Virtual
+                <i className="fa fa-comments"></i>&nbsp; Virtual Classroom
+              </li>
+            </a>
+            <a href="/fieldtrip">
+              <li>
+                <i className="fa fa-suitcase"></i>&nbsp; Virtual Field Trip
               </li>
             </a>
             <a href="/" onClick={logout}>

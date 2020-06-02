@@ -65,9 +65,7 @@ class Attendance extends Component {
     if (this.state.user !== undefined) {
       return (
         <>
-          <div className="title">
-            <span className="top-title">Attendance</span>
-          </div>
+          <div className="title"></div>
           <div className="container">
             <div className="attendance">
               <div className="table-container">

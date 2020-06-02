@@ -109,7 +109,6 @@ class Create extends Component {
       return !this.state.user.isStudent ? (
         <>
           <div className="title">
-            <span className="top-title-create">Create</span>
           </div>
           <div className="container">
             <div className="create">
