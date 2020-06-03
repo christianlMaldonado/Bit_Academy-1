@@ -94,15 +94,6 @@ class SignIn extends Component {
     }
   };
 
-  // tour = () => {
-  //   API.login({ email: "guest@email.com", password: "test1234" }).then((response) => {
-  //     let tokenArr = response.data.token.split(" ");
-  //     const token = tokenArr.pop().toString();
-  //     localStorage.setItem("id_token", token);
-  //     this.props.history.push("/home");
-  //   });
-  // };
-
   render() {
     return (
       <>

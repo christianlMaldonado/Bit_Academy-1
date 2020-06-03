@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import "./style.css";
-import {
-  Container,
-  Tbl,
-  TBody,
-  Row,
-  Header,
-  Cell,
-} from "../../components/tables/index";
+import { Container, Tbl, TBody, Row, Header, Cell } from "../../components/tables/index";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import API from "../../utilities/API";
@@ -29,10 +22,10 @@ class Grades extends Component {
     if (!jwt) {
       this.props.history.push("/");
     }
-    API.userPortal(jwt)
+    API.teacherPortal(jwt)
       .then((res) => {
         this.setState({
-          user: res.data.user,
+          user: res.data.teacher,
         });
       })
       .catch((err) => {
@@ -54,8 +47,7 @@ class Grades extends Component {
     if (this.state.user !== undefined) {
       return (
         <>
-          <div className="title">
-          </div>
+          <div className="title"></div>
           <div className="container">
             <div className="grades">
               <div className="table-container">
@@ -124,33 +116,22 @@ class Grades extends Component {
                         <TBody>
                           {this.state.students ? (
                             this.state.students.map((student) => {
-                              return student.student.schoolWork.map(
-                                (assignment) => (
-                                  <Row key={Math.floor(Math.random() * 100000)}>
-                                    <Cell
-                                      key={Math.floor(Math.random() * 100000)}
-                                    >
-                                      <b>{student.name}</b>
-                                    </Cell>
-                                    <Cell
-                                      key={Math.floor(Math.random() * 100000)}
-                                    >
-                                      <b>{assignment.assignment.name}</b>
-                                    </Cell>
-                                    <Cell
-                                      key={Math.floor(Math.random() * 100000)}
-                                    >
-                                      <b>{assignment.assignment.link}</b>
-                                    </Cell>
-                                    <Cell
-                                      key={Math.floor(Math.random() * 100000)}
-                                      align="right"
-                                    >
-                                      <b>{assignment.assignment.grade}</b>
-                                    </Cell>
-                                  </Row>
-                                )
-                              );
+                              return student.student.schoolWork.map((assignment) => (
+                                <Row key={Math.floor(Math.random() * 100000)}>
+                                  <Cell key={Math.floor(Math.random() * 100000)}>
+                                    <b>{student.name}</b>
+                                  </Cell>
+                                  <Cell key={Math.floor(Math.random() * 100000)}>
+                                    <b>{assignment.assignment.name}</b>
+                                  </Cell>
+                                  <Cell key={Math.floor(Math.random() * 100000)}>
+                                    <b>{assignment.assignment.link}</b>
+                                  </Cell>
+                                  <Cell key={Math.floor(Math.random() * 100000)} align="right">
+                                    <b>{assignment.assignment.grade}</b>
+                                  </Cell>
+                                </Row>
+                              ));
                             })
                           ) : (
                             <Row></Row>
