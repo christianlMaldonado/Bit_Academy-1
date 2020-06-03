@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@600&display=swap");
 
 .MuiAvatar-root {
-  background-color: rgb(119, 147, 172) !important;
+  background-color: rgb(113, 142, 146) !important;
   justify-content: center;
 }
 
 .submitLogin {
-  background-color: rgb(119, 147, 172) !important;
+  background-color: rgb(113, 142, 146) !important;
   color: white !important;
   width: 10vw !important;
   margin-top: 5vh !important;
@@ -29,7 +29,7 @@ input {
 }
 
 input[type="text"]:not(.browser-default):focus:not([read-only]) {
-  border-bottom: 2px solid rgb(119, 147, 172) !important;
+  border-bottom: 2px solid rgb(113, 142, 146) !important;
   box-shadow: none !important;
   font-family: "Raleway", sans-serif;
 }
@@ -44,7 +44,7 @@ button {
 }
 
 .MuiFormLabel-root.Mui-focused {
-  color: rgb(119, 147, 172) !important;
+  color: rgb(113, 142, 146) !important;
   font-family: "Raleway", sans-serif;
 }
 
@@ -75,7 +75,7 @@ button {
 }
 
 .formHead {
-  color: rgb(119, 147, 172);
+  color: rgb(113, 142, 146);
   font-size: 30px !important;
   font-family: "Manrope", sans-serif;
   justify-content: center !important;
@@ -83,7 +83,7 @@ button {
 }
 
 .MuiTypography-colorPrimary {
-  color: rgb(119, 147, 172) !important;
+  color: rgb(113, 142, 146) !important;
 }
 
 @media only screen and (max-width: 1025px) {

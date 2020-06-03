@@ -1,52 +1,39 @@
 import axios from "axios";
 
 export default {
-  // API calls for teachers
-  addStudent: function (student) {
-    return axios.post("/teacher/addStudent", student);
+  addStudent: function(student) {
+    return axios.post("/classroom/addStudent", student);
   },
-  addHomework: function (homework) {
-    return axios.post("/teacher/classwork", homework);
+  addHomework: function(homework) {
+    return axios.post("/classroom/homework", homework);
   },
-  gradeAssignment: function (homework) {
-    return axios.put("/teacher/classwork", homework);
+  getHomework: function(student) {
+    return axios.get("/classroom/homework", student);
   },
-  takeAttendance: function () {
-    return axios.get("/teacher/attendance");
+  gradeAssignment: function(homework) {
+    return axios.put("/classroom/homework", homework);
   },
-  registerTeacher: function (teacher) {
-    return axios.post("/teacher/register", teacher);
+  submitHomework: function(homework) {
+    return axios.post("/classroom/submitHomework", homework);
   },
-  loginTeacher: function (user) {
-    return axios.post("/teacher/auth", user);
+  takeAttendance: function() {
+    return axios.get("classroom/attendance");
   },
-  teacherPortal: function (token) {
-    return axios.get("/teacher/profile", {
+  checkIn: function(student) {
+    return axios.put("classroom/attendance", student);
+  },
+  registerTeacher: function(teacher) {
+    return axios.post("/users/register", teacher);
+  },
+  login: function(user) {
+    return axios.post("/users/auth", user);
+  },
+  userPortal: function(token) {
+    return axios.get("/users/profile", {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-type": "application/json",
       },
     });
-  },
-  // API calls for Students
-  loginStudent: function (user) {
-    return axios.post("/student/auth", user);
-  },
-  studentPortal: function (token) {
-    return axios.get("/student/profile", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-type": "application/json",
-      },
-    });
-  },
-  getHomework: function (student) {
-    return axios.get("/student/classWork", student);
-  },
-  submitHomework: function (homework) {
-    return axios.post("/student/submitClasswork", homework);
-  },
-  checkIn: function (student) {
-    return axios.put("/student/attendance", student);
   },
 };

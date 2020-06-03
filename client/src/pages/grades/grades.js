@@ -55,7 +55,6 @@ class Grades extends Component {
       return (
         <>
           <div className="title">
-            <span className="top-title-create">Grades</span>
           </div>
           <div className="container">
             <div className="grades">

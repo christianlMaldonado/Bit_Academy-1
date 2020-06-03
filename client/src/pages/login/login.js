@@ -28,18 +28,7 @@ class SignIn extends Component {
 
   handleFormSubmit = (e) => {
     e.preventDefault();
-    API.loginTeacher({ email: this.state.email, password: this.state.password }).then(
-      (response) => {
-        let tokenArr = response.data.token.split(" ");
-        const token = tokenArr.pop().toString();
-        localStorage.setItem("id_token", token);
-        this.props.history.push("/home");
-      }
-    );
-  };
-
-  tour = () => {
-    API.login({ email: "guest@email.com", password: "test1234" }).then((response) => {
+    API.login({ email: this.state.email, password: this.state.password }).then((response) => {
       let tokenArr = response.data.token.split(" ");
       const token = tokenArr.pop().toString();
       localStorage.setItem("id_token", token);
@@ -108,9 +97,6 @@ class SignIn extends Component {
                 </Grid>
               </Grid>
             </form>
-            <Button className="submitLogin" onClick={this.tour}>
-              Tour The Site
-            </Button>
           </div>
           <Box mt={8}>
             <Copyright />
