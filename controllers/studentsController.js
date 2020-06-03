@@ -8,16 +8,12 @@ module.exports = {
     const password = req.body.password;
 
     Student.getStudentByEmail(email, (err, user) => {
-      if (err) {
-        res.status(401).json({ message: "Access Denied" });
-      }
+      if (err) throw err;
       if (!user) {
-        res.status(401).json({ message: "User not found" });
+        return res.json({ success: false, msg: "User not found" });
       }
       Student.comparePassword(password, user.password, (err, isMatch) => {
-        if (err) {
-          res.status(401).json({ message: "Access Denied" });
-        }
+        if (err) throw err;
         if (isMatch) {
           const token = jwt.sign(user.toJSON(), config.secret, {
             expiresIn: 604800,
