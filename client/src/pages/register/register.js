@@ -33,6 +33,7 @@ class Register extends Component {
     API.registerTeacher({
       email: this.state.email,
       password: this.state.password,
+      isStudent: false,
       username: this.state.firstName + " " + this.state.lastName,
     }).then((response) => {
       console.log(response.msg);

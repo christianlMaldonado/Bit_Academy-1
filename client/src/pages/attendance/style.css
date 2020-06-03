@@ -1,12 +1,8 @@
 .attendance {
-  background-color: rgb(255, 255, 255);
   height: 100%;
   text-align: center;
-  padding-top: 8vh;
-  padding-bottom: 5vh;
-  margin-left: -8vw;
   width: 100vw;
-  margin-top: -2vh;
+  padding-bottom: 10vh;
 }
 
 .take-attendance {

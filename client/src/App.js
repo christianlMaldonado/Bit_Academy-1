@@ -17,6 +17,7 @@ import Login from "./pages/login/login";
 import Register from "./pages/register/register";
 import NoMatch from "./pages/404/404";
 import Mobile from "./components/mobile/mobile";
+import Fieldtrip from "./pages/fieldtrips/fieldtrip";
 import "./App.css";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
       <Route exact path="/assignments" component={Assignments} />
       <Route exact path="/create" component={Create} />
       <Route exact path="/virtual" component={Virtual} />
+      <Route exact path="/fieldtrip" component={Fieldtrip} />
     </>
   );
 

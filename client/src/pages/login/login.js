@@ -179,9 +179,6 @@ class SignIn extends Component {
                 </Grid>
               </Grid>
             </form>
-            {/* <Button className="submitLogin" onClick={this.tour}>
-              Tour The Site
-            </Button> */}
           </div>
           <Box mt={8}>
             <Copyright />
