@@ -17,10 +17,10 @@ class Home extends Component {
     if (!jwt) {
       this.props.history.push("/");
     }
-    API.userPortal(jwt)
+    API.teacherPortal(jwt)
       .then((res) => {
         this.setState({
-          user: res.data.user,
+          user: res.data.teacher.username,
         });
       })
       .catch((err) => {
@@ -31,12 +31,7 @@ class Home extends Component {
   render() {
     let topTitle;
     if (this.state.user !== undefined) {
-      topTitle = topTitle = (
-        <span className="top-title-home">
-          {" "}
-          Welcome, {this.state.user.username}{" "}
-        </span>
-      );
+      topTitle = topTitle = <span className="top-title-home"> Welcome, {this.state.user} </span>;
       return (
         <div className="home">
           <div className="title">
@@ -46,20 +41,10 @@ class Home extends Component {
           <div className="container">
             {!this.state.user.isStudent
               ? this.state.home.map((data) => (
-                  <Tiles
-                    key={data.id}
-                    url={data.url}
-                    name={data.name}
-                    image={data.image}
-                  />
+                  <Tiles key={data.id} url={data.url} name={data.name} image={data.image} />
                 ))
               : this.state.stuHome.map((data) => (
-                  <Tiles
-                    key={data.id}
-                    url={data.url}
-                    name={data.name}
-                    image={data.image}
-                  />
+                  <Tiles key={data.id} url={data.url} name={data.name} image={data.image} />
                 ))}
           </div>
         </div>

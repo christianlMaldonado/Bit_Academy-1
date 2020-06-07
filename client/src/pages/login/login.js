@@ -1,23 +1,36 @@
 import React, { Component } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  Checkbox,
+  FormControlLabel,
+  Snackbar,
+} from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
 import Copyright from "../../components/copyright/copyright";
+import Alert from "../../components/Alert";
 import "./styleLogin.css";
 import API from "../../utilities/API";
 
 class SignIn extends Component {
-  state = {
-    email: "",
-    password: "",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      isStudent: false,
+      open: false,
+      message: "",
+      severity: "",
+    };
+  }
 
   handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -26,14 +39,59 @@ class SignIn extends Component {
     });
   };
 
+  handleChange = (event) => {
+    this.setState({
+      ...this.state,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") return;
+    this.setState({
+      open: false,
+    });
+  };
+
   handleFormSubmit = (e) => {
     e.preventDefault();
-    API.login({ email: this.state.email, password: this.state.password }).then((response) => {
-      let tokenArr = response.data.token.split(" ");
-      const token = tokenArr.pop().toString();
-      localStorage.setItem("id_token", token);
-      this.props.history.push("/home");
-    });
+    if (this.state.isStudent) {
+      API.loginStudent({ email: this.state.email, password: this.state.password }).then(
+        (response) => {
+          if (response.data.token) {
+            let tokenArr = response.data.token.split(" ");
+            const token = tokenArr.pop().toString();
+            localStorage.setItem("id_token", token);
+            this.props.history.push("/home");
+          } else {
+            this.setState({
+              ...this.state,
+              message: "Student doesn't exist contact your teacher.",
+              severity: "error",
+              open: true,
+            });
+          }
+        }
+      );
+    } else {
+      API.loginTeacher({ email: this.state.email, password: this.state.password }).then(
+        (response) => {
+          if (response.data.token) {
+            let tokenArr = response.data.token.split(" ");
+            const token = tokenArr.pop().toString();
+            localStorage.setItem("id_token", token);
+            this.props.history.push("/home");
+          } else {
+            this.setState({
+              ...this.state,
+              message: "Teacher doesn't exist try registering.",
+              severity: "error",
+              open: true,
+            });
+          }
+        }
+      );
+    }
   };
 
   render() {
@@ -46,6 +104,11 @@ class SignIn extends Component {
             src={process.env.PUBLIC_URL + "/images/login.jpg"}
           ></img>
         </div>
+        <Snackbar open={this.state.open} autoHideDuration={5000} onClose={this.handleClose}>
+          <Alert onClose={this.handleClose} severity={this.state.severity}>
+            {this.state.message}
+          </Alert>
+        </Snackbar>
         <Container component="main" className="loginContainer">
           <CssBaseline />
           <div className="center">
@@ -56,6 +119,16 @@ class SignIn extends Component {
               Sign In
             </Typography>
             <form noValidate>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={this.state.isStudent}
+                    onChange={this.handleChange}
+                    name="isStudent"
+                  />
+                }
+                label="Student"
+              />
               <TextField
                 onChange={this.handleInputChange}
                 margin="normal"

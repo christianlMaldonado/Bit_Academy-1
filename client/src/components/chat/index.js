@@ -26,10 +26,10 @@ class Chat extends Component {
     if (!jwt) {
       this.props.history.push("/");
     }
-    API.userPortal(jwt)
+    API.teacherPortal(jwt)
       .then((res) =>
         this.setState({
-          user: res.data.user.username,
+          user: res.data.teacher.username,
           readError: null,
           loadingChats: true,
         })
@@ -106,17 +106,12 @@ class Chat extends Component {
               return (
                 <p
                   key={chat.timestamp}
-                  className={
-                    "chat-bubble " +
-                    (this.state.user === chat.uid ? "current-user" : "")
-                  }
+                  className={"chat-bubble " + (this.state.user === chat.uid ? "current-user" : "")}
                 >
                   {chat.uid} {" : "}
                   {chat.content}
                   <br />
-                  <span className="chat-time float-right">
-                    {this.formatTime(chat.timestamp)}
-                  </span>
+                  <span className="chat-time float-right">{this.formatTime(chat.timestamp)}</span>
                 </p>
               );
             })}
@@ -128,19 +123,13 @@ class Chat extends Component {
               onChange={this.handleChange}
               value={this.state.content}
             ></textarea>
-            {this.state.error ? (
-              <p className="text-danger">{this.state.error}</p>
-            ) : null}
-            <button
-              type="submit"
-              className="btn btn-submit px-5 mt-4 chat-submit"
-            >
+            {this.state.error ? <p className="text-danger">{this.state.error}</p> : null}
+            <button type="submit" className="btn btn-submit px-5 mt-4 chat-submit">
               Send
             </button>
           </form>
           <div className="py-5 mx-3">
-            Logged in as:{" "}
-            <strong className="text-info">{this.state.user}</strong>
+            Logged in as: <strong className="text-info">{this.state.user}</strong>
           </div>
         </div>
       </>

@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import "./style.css";
-import {
-  Container,
-  Tbl,
-  TBody,
-  Row,
-  Header,
-  Cell,
-} from "../../components/tables/index";
+import { Container, Tbl, TBody, Row, Header, Cell } from "../../components/tables/index";
 import {
   Button,
   Dialog,
@@ -51,10 +44,10 @@ class Assignments extends Component {
     if (!jwt) {
       this.props.history.push("/");
     }
-    API.userPortal(jwt)
+    API.teacherPortal(jwt)
       .then((res) => {
         this.setState({
-          user: res.data.user,
+          user: res.data.teacher,
         });
       })
       .catch((err) => {
@@ -150,15 +143,8 @@ class Assignments extends Component {
           <div className="container">
             <div className="assignments">
               <div className="table-container">
-                <Snackbar
-                  open={this.state.open}
-                  autoHideDuration={5000}
-                  onClose={this.handleClose}
-                >
-                  <Alert
-                    onClose={this.handleClose}
-                    severity={this.state.severity}
-                  >
+                <Snackbar open={this.state.open} autoHideDuration={5000} onClose={this.handleClose}>
+                  <Alert onClose={this.handleClose} severity={this.state.severity}>
                     {this.state.message}
                   </Alert>
                 </Snackbar>
@@ -187,9 +173,7 @@ class Assignments extends Component {
                             </Cell>
                             <Cell align="left">
                               <TextField
-                                onChange={(event) =>
-                                  this.handleInputChange(event)
-                                }
+                                onChange={(event) => this.handleInputChange(event)}
                                 required
                                 fullWidth
                                 label="Link"
@@ -205,10 +189,7 @@ class Assignments extends Component {
                                 Link
                               </Button>
                             </Cell>
-                            <Cell
-                              align="right"
-                              key={homework.assignment.description}
-                            >
+                            <Cell align="right" key={homework.assignment.description}>
                               <b>{homework.assignment.description}</b>
                             </Cell>
                           </Row>
@@ -303,39 +284,28 @@ class Assignments extends Component {
                         <TBody>
                           {this.state.students ? (
                             this.state.students.map((student) => {
-                              return student.student.schoolWork.map(
-                                (assignment) => (
-                                  <Row key={Math.floor(Math.random() * 100000)}>
-                                    <Cell
+                              return student.student.schoolWork.map((assignment) => (
+                                <Row key={Math.floor(Math.random() * 100000)}>
+                                  <Cell key={Math.floor(Math.random() * 100000)}>
+                                    <b>{student.username}</b>
+                                  </Cell>
+                                  <Cell key={Math.floor(Math.random() * 100000)}>
+                                    <b>{assignment.assignment.name}</b>
+                                  </Cell>
+                                  <Cell key={Math.floor(Math.random() * 100000)}>
+                                    <b>{assignment.assignment.link}</b>
+                                  </Cell>
+                                  <Cell align="right" key={Math.floor(Math.random() * 100000)}>
+                                    <Button
+                                      variant="outlined"
+                                      onClick={this.handleOpenDialog}
                                       key={Math.floor(Math.random() * 100000)}
                                     >
-                                      <b>{student.username}</b>
-                                    </Cell>
-                                    <Cell
-                                      key={Math.floor(Math.random() * 100000)}
-                                    >
-                                      <b>{assignment.assignment.name}</b>
-                                    </Cell>
-                                    <Cell
-                                      key={Math.floor(Math.random() * 100000)}
-                                    >
-                                      <b>{assignment.assignment.link}</b>
-                                    </Cell>
-                                    <Cell
-                                      align="right"
-                                      key={Math.floor(Math.random() * 100000)}
-                                    >
-                                      <Button
-                                        variant="outlined"
-                                        onClick={this.handleOpenDialog}
-                                        key={Math.floor(Math.random() * 100000)}
-                                      >
-                                        Add Grade
-                                      </Button>
-                                    </Cell>
-                                  </Row>
-                                )
-                              );
+                                      Add Grade
+                                    </Button>
+                                  </Cell>
+                                </Row>
+                              ));
                             })
                           ) : (
                             <Row></Row>
