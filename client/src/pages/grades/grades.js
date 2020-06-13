@@ -22,10 +22,10 @@ class Grades extends Component {
     if (!jwt) {
       this.props.history.push("/");
     }
-    API.teacherPortal(jwt)
+    API.userPortal(jwt)
       .then((res) => {
         this.setState({
-          user: res.data.teacher,
+          user: res.data,
         });
       })
       .catch((err) => {
@@ -35,8 +35,8 @@ class Grades extends Component {
   }
 
   // get assignments of students
-  seeGrades = () => {
-    API.takeAttendance().then((res) => {
+  seeGrades = (id) => {
+    API.getStudents(id).then((res) => {
       this.setState({
         students: res.data,
       });
@@ -51,7 +51,7 @@ class Grades extends Component {
           <div className="container">
             <div className="grades">
               <div className="table-container">
-                {this.state.user.isStudent ? (
+                {this.state.user.student ? (
                   <Container component={Paper}>
                     <Tbl>
                       <Header>
@@ -68,7 +68,7 @@ class Grades extends Component {
                         </Row>
                       </Header>
                       <TBody>
-                        {this.state.user.student.schoolWork.map((homework) => (
+                        {this.state.user.classwork.map((homework) => (
                           <Row key={homework.assignment._id}>
                             <Cell key={homework.assignment.name}>
                               <b>{homework.assignment.name}</b>
@@ -90,7 +90,7 @@ class Grades extends Component {
                       className="see-assignments"
                       variant="contained"
                       color="primary"
-                      onClick={this.seeGrades}
+                      onClick={() => this.seeGrades(this.state.user.id)}
                       style={{ marginBottom: "40px" }}
                     >
                       See Grades
@@ -116,18 +116,18 @@ class Grades extends Component {
                         <TBody>
                           {this.state.students ? (
                             this.state.students.map((student) => {
-                              return student.student.schoolWork.map((assignment) => (
-                                <Row key={Math.floor(Math.random() * 100000)}>
-                                  <Cell key={Math.floor(Math.random() * 100000)}>
-                                    <b>{student.name}</b>
+                              return student.classwork.map((assignment) => (
+                                <Row key={assignment._id}>
+                                  <Cell>
+                                    <b>{student.username}</b>
                                   </Cell>
-                                  <Cell key={Math.floor(Math.random() * 100000)}>
+                                  <Cell>
                                     <b>{assignment.assignment.name}</b>
                                   </Cell>
-                                  <Cell key={Math.floor(Math.random() * 100000)}>
+                                  <Cell>
                                     <b>{assignment.assignment.link}</b>
                                   </Cell>
-                                  <Cell key={Math.floor(Math.random() * 100000)} align="right">
+                                  <Cell align="right">
                                     <b>{assignment.assignment.grade}</b>
                                   </Cell>
                                 </Row>

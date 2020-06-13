@@ -44,10 +44,10 @@ class Assignments extends Component {
     if (!jwt) {
       this.props.history.push("/");
     }
-    API.teacherPortal(jwt)
+    API.userPortal(jwt)
       .then((res) => {
         this.setState({
-          user: res.data.teacher,
+          user: res.data,
         });
       })
       .catch((err) => {
@@ -100,8 +100,8 @@ class Assignments extends Component {
     this.setState({ openDialog: false });
   };
 
-  seeAssignments = () => {
-    API.takeAttendance().then((res) => {
+  seeAssignments = (id) => {
+    API.getStudents(id).then((res) => {
       this.setState({
         students: res.data,
       });
@@ -114,7 +114,6 @@ class Assignments extends Component {
       assignment: student.assignment,
       grade: student.grade,
     };
-    console.log(homework);
     API.gradeAssignment(homework).then((err, res) => {
       if (err) {
         this.setState({
@@ -166,7 +165,7 @@ class Assignments extends Component {
                       </Header>
 
                       <TBody>
-                        {this.state.user.student.schoolWork.map((homework) => (
+                        {this.state.user.classwork.map((homework) => (
                           <Row key={homework._id}>
                             <Cell key={homework.assignment.name}>
                               <b>{homework.assignment.name}</b>
@@ -203,7 +202,7 @@ class Assignments extends Component {
                       className="see-assignments"
                       variant="contained"
                       color="primary"
-                      onClick={this.seeAssignments}
+                      onClick={() => this.seeAssignments(this.state.user.id)}
                       style={{ marginBottom: "40px" }}
                     >
                       See Assignments
@@ -284,23 +283,19 @@ class Assignments extends Component {
                         <TBody>
                           {this.state.students ? (
                             this.state.students.map((student) => {
-                              return student.student.schoolWork.map((assignment) => (
-                                <Row key={Math.floor(Math.random() * 100000)}>
-                                  <Cell key={Math.floor(Math.random() * 100000)}>
+                              return student.classwork.map((assignment) => (
+                                <Row key={assignment._id}>
+                                  <Cell>
                                     <b>{student.username}</b>
                                   </Cell>
-                                  <Cell key={Math.floor(Math.random() * 100000)}>
+                                  <Cell>
                                     <b>{assignment.assignment.name}</b>
                                   </Cell>
-                                  <Cell key={Math.floor(Math.random() * 100000)}>
+                                  <Cell>
                                     <b>{assignment.assignment.link}</b>
                                   </Cell>
-                                  <Cell align="right" key={Math.floor(Math.random() * 100000)}>
-                                    <Button
-                                      variant="outlined"
-                                      onClick={this.handleOpenDialog}
-                                      key={Math.floor(Math.random() * 100000)}
-                                    >
+                                  <Cell align="right">
+                                    <Button variant="outlined" onClick={this.handleOpenDialog}>
                                       Add Grade
                                     </Button>
                                   </Cell>

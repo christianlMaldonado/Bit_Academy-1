@@ -1,83 +1,44 @@
-const jwt = require("jsonwebtoken");
-const config = require("../config/database");
-const Teacher = require("../models/Teacher");
-const Student = require("../models/Student");
-const mongoose = require("mongoose");
+const User = require("../models/Users");
 
 module.exports = {
   create: function (req, res) {
-    let newUser = new Teacher({
-      username: req.body.name,
-      email: req.body.email,
+    let newUser = new User({
+      username: req.body.username,
       password: req.body.password,
-      student: [],
+      email: req.body.email,
+      student: false,
+      students: [],
     });
 
-    Teacher.addTeacher(newUser, (err, user) => {
+    User.addUser(newUser, (err, user) => {
       if (err) {
-        res.json({ success: false, msg: "Failed to register user" });
+        // console.log(err);
+        res.json({ success: false, msg: "Failed to register user." });
       } else {
-        res.json({ success: true, msg: "User registered successfully" });
+        res.json({ success: true, msg: "User registered successfully!" });
       }
     });
   },
-  authentication: function (req, res) {
-    const email = req.body.email.toLowerCase();
-    const password = req.body.password;
 
-    Teacher.getTeacherByEmail(email, (err, user) => {
-      if (err) throw err;
-      if (!user) {
-        return res.json({ success: false, msg: "User not found" });
-      }
-
-      Teacher.comparePassword(password, user.password, (err, isMatch) => {
-        if (err) throw err;
-        if (isMatch) {
-          const token = jwt.sign(user.toJSON(), config.secret, {
-            expiresIn: 604800,
-          });
-          res.json({
-            success: true,
-            token: `bearer ${token}`,
-            user: {
-              id: user._id,
-              username: user.username,
-              email: user.email,
-            },
-          });
-        } else {
-          return res.json({ success: false, msg: "Wrong Password" });
-        }
-      });
-    });
-  },
-  profile: function (req, res) {
-    res.json({
-      teacher: {
-        students: req.user.student,
-        id: req.user._id,
-        username: req.user.username,
-        email: req.user.email,
-      },
-    });
-  },
   createStudent: function (req, res) {
-    let newStudent = new Student({
+    let newStudent = new User({
       email: req.body.email,
       username: req.body.username,
       password: req.body.password,
       teacher: req.body.teacherId,
+      student: true,
+      attendance: [],
+      classwork: [],
     });
 
-    Student.addStudent(newStudent, (err, student) => {
+    User.addUser(newStudent, (err, student) => {
       if (err) {
         res.json({ success: false, msg: "Failed to add student" });
       } else {
-        student.teacher = newStudent.teacher;
-        Teacher.findOne(newStudent.teacher, (err, teacher) => {
+        // student.teacher = newStudent.teacher;
+        User.findOne(student.teacher, (err, teacher) => {
           if (err) throw err;
-          teacher.student.push(student._id);
+          teacher.students.push(student._id);
           teacher.save((err, teacher) => {
             if (err) throw err;
             res.json({ success: true, msg: "Student added successfully" });
@@ -87,11 +48,11 @@ module.exports = {
     });
   },
   addClasswork: function (req, res) {
-    Student.updateMany(
-      {},
+    User.updateMany(
+      { student: req.body.isStudent, teacher: req.body._id },
       {
         $push: {
-          classWork: {
+          classwork: {
             assignment: {
               name: req.body.assignment,
               grade: 0,
@@ -104,6 +65,7 @@ module.exports = {
       },
       (err, homework) => {
         if (err) throw err;
+        console.log(homework);
         res.json({ success: true, msg: "classwork added" });
       }
     );
@@ -114,11 +76,11 @@ module.exports = {
       assignment: req.body.assignment,
       grade: req.body.grade,
     };
-    Student.findOneAndUpdate(
+    User.findOneAndUpdate(
       { username: homework.username },
       {
         $set: {
-          "classWork.$[elem].grade": homework.grade,
+          "classwork.$[elem].grade": homework.grade,
         },
       },
       {
@@ -131,7 +93,7 @@ module.exports = {
         if (!student) {
           return res.json({ success: false, msg: "Student not found" });
         } else {
-          student.student.classWork.forEach((element) => {
+          student.classwork.forEach((element) => {
             if (element.assignment.name === homework.assignment) {
               element.assignment.grade = homework.grade;
             }
@@ -143,8 +105,8 @@ module.exports = {
       }
     );
   },
-  checkAttendance: function (req, res) {
-    Student.find({}, (err, students) => {
+  findStudents: function (req, res) {
+    User.find({ teacher: req.params.id }, (err, students) => {
       if (err) throw err;
       res.json(students);
     });

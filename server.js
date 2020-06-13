@@ -2,8 +2,7 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 const cors = require("cors");
-const passportTeacher = require("passport");
-const passportStudent = require("passport");
+const passport = require("passport");
 const mongoose = require("mongoose");
 const config = require("./config/database");
 
@@ -11,6 +10,7 @@ const app = express();
 const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
+const auth = require("./routes/auth");
 const teachers = require("./routes/teachers");
 const students = require("./routes/students");
 const PORT = process.env.PORT || 4200;
@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
 mongoose.connect(process.env.MONGODB_URI || config.database, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
   useFindAndModify: false,
 });
 
@@ -55,17 +56,13 @@ mongoose.connection.on("error", (err) => {
 app.use(cors());
 app.use(express.json());
 
-// initialize teacher session
-app.use(passportTeacher.initialize());
-app.use(passportTeacher.session());
+// initialize session
+app.use(passport.initialize());
+app.use(passport.session());
 
-// initialize student session
-app.use(passportStudent.initialize());
-app.use(passportStudent.session());
+require("./config/passport")(passport);
 
-require("./config/passport")(passportTeacher);
-require("./config/passport")(passportStudent);
-
+app.use("/auth", auth);
 app.use("/teacher", teachers);
 app.use("/student", students);
 

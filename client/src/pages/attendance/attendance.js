@@ -23,10 +23,10 @@ class Attendance extends Component {
     if (!jwt) {
       this.props.history.push("/");
     }
-    API.teacherPortal(jwt)
+    API.userPortal(jwt)
       .then((res) => {
         this.setState({
-          user: res.data.teacher,
+          user: res.data,
         });
       })
       .catch((err) => {
@@ -46,8 +46,8 @@ class Attendance extends Component {
     });
   };
 
-  takeAttendance = () => {
-    API.takeAttendance().then((res) => {
+  takeAttendance = (id) => {
+    API.getStudents(id).then((res) => {
       this.setState({
         students: res.data,
       });
@@ -75,7 +75,10 @@ class Attendance extends Component {
                   )
                 ) : (
                   <>
-                    <button onClick={this.takeAttendance} className="take-attendance">
+                    <button
+                      onClick={() => this.takeAttendance(this.state.user.id)}
+                      className="take-attendance"
+                    >
                       {" "}
                       Take Attendance
                     </button>
@@ -95,12 +98,12 @@ class Attendance extends Component {
                           {this.state.students ? (
                             this.state.students.map((student) => (
                               <Row key={student._id}>
-                                <Cell key={student.username}>
+                                <Cell>
                                   <b>{student.username}</b>
                                 </Cell>
-                                <Cell key={student.name} align="right">
+                                <Cell align="right">
                                   <b>
-                                    {student.student.attendance.map((present) => (
+                                    {student.attendance.map((present) => (
                                       <p key={present._id}>{present.attendance.date}</p>
                                     ))}
                                   </b>
