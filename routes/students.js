@@ -7,6 +7,6 @@ router.route("/submitClasswork").put(controller.submitClasswork);
 
 router.route("/classWork").get(controller.getClasswork);
 
-router.route("/attendance").post(controller.attendance);
+router.route("/attendance").put(controller.attendance);
 
 module.exports = router;

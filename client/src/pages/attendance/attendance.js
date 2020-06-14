@@ -28,6 +28,7 @@ class Attendance extends Component {
         this.setState({
           user: res.data,
         });
+        this.takeAttendance(this.state.user.id);
       })
       .catch((err) => {
         this.props.history.push("/");
@@ -39,7 +40,6 @@ class Attendance extends Component {
       name: this.state.user.username,
     };
     API.checkIn(studentCheckIn).then((res) => {
-      console.log(res);
       this.setState({
         checkedIn: true,
       });
@@ -62,7 +62,7 @@ class Attendance extends Component {
           <div className="container">
             <div className="attendance">
               <div className="table-container">
-                {this.state.user.isStudent ? (
+                {this.state.user.student ? (
                   !this.state.checkedIn ? (
                     <button
                       className="check-in btn-floating pulse btn-large"
@@ -75,13 +75,6 @@ class Attendance extends Component {
                   )
                 ) : (
                   <>
-                    <button
-                      onClick={() => this.takeAttendance(this.state.user.id)}
-                      className="take-attendance"
-                    >
-                      {" "}
-                      Take Attendance
-                    </button>
                     <Container component={Paper}>
                       <Tbl>
                         <Header>

@@ -49,6 +49,7 @@ class Assignments extends Component {
         this.setState({
           user: res.data,
         });
+        this.seeAssignments(this.state.user.id);
       })
       .catch((err) => {
         this.props.history.push("/");
@@ -66,7 +67,7 @@ class Assignments extends Component {
     const homeworkLink = {
       id,
       link: this.state.link,
-      user: this.state.user,
+      user: this.state.user.username,
     };
     API.submitHomework(homeworkLink).then((err, res) => {
       if (err) {
@@ -77,7 +78,7 @@ class Assignments extends Component {
         });
       }
       this.setState({
-        link: null,
+        link: "",
         message: "Homework Submitted",
         severity: "success",
         open: true,
@@ -147,7 +148,7 @@ class Assignments extends Component {
                     {this.state.message}
                   </Alert>
                 </Snackbar>
-                {this.state.user.isStudent ? (
+                {this.state.user.student ? (
                   <Container component={Paper}>
                     <Tbl>
                       <Header>
@@ -198,15 +199,6 @@ class Assignments extends Component {
                   </Container>
                 ) : (
                   <>
-                    <Button
-                      className="see-assignments"
-                      variant="contained"
-                      color="primary"
-                      onClick={() => this.seeAssignments(this.state.user.id)}
-                      style={{ marginBottom: "40px" }}
-                    >
-                      See Assignments
-                    </Button>
                     <Dialog
                       open={this.state.openDialog}
                       onClose={this.handleCloseDialog}

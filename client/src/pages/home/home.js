@@ -41,7 +41,7 @@ class Home extends Component {
             <span className="top-title-home">{topTitle} </span>
           </div>
           <div className="container">
-            {!this.state.user.isStudent
+            {!this.state.user.student
               ? this.state.home.map((data) => (
                   <Tiles key={data.id} url={data.url} name={data.name} image={data.image} />
                 ))
