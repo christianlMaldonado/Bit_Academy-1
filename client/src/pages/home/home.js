@@ -17,10 +17,10 @@ class Home extends Component {
     if (!jwt) {
       this.props.history.push("/");
     }
-    API.teacherPortal(jwt)
+    API.userPortal(jwt)
       .then((res) => {
         this.setState({
-          user: res.data.teacher.username,
+          user: res.data,
         });
       })
       .catch((err) => {
@@ -31,7 +31,9 @@ class Home extends Component {
   render() {
     let topTitle;
     if (this.state.user !== undefined) {
-      topTitle = topTitle = <span className="top-title-home"> Welcome, {this.state.user} </span>;
+      topTitle = topTitle = (
+        <span className="top-title-home"> Welcome, {this.state.user.username} </span>
+      );
       return (
         <div className="home">
           <div className="title">

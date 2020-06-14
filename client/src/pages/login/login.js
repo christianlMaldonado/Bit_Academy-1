@@ -9,8 +9,6 @@ import {
   Box,
   Typography,
   Container,
-  Checkbox,
-  FormControlLabel,
   Snackbar,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -55,43 +53,21 @@ class SignIn extends Component {
 
   handleFormSubmit = (e) => {
     e.preventDefault();
-    if (this.state.isStudent) {
-      API.loginStudent({ email: this.state.email, password: this.state.password }).then(
-        (response) => {
-          if (response.data.token) {
-            let tokenArr = response.data.token.split(" ");
-            const token = tokenArr.pop().toString();
-            localStorage.setItem("id_token", token);
-            this.props.history.push("/home");
-          } else {
-            this.setState({
-              ...this.state,
-              message: "Student doesn't exist contact your teacher.",
-              severity: "error",
-              open: true,
-            });
-          }
-        }
-      );
-    } else {
-      API.loginTeacher({ email: this.state.email, password: this.state.password }).then(
-        (response) => {
-          if (response.data.token) {
-            let tokenArr = response.data.token.split(" ");
-            const token = tokenArr.pop().toString();
-            localStorage.setItem("id_token", token);
-            this.props.history.push("/home");
-          } else {
-            this.setState({
-              ...this.state,
-              message: "Teacher doesn't exist try registering.",
-              severity: "error",
-              open: true,
-            });
-          }
-        }
-      );
-    }
+    API.login({ email: this.state.email, password: this.state.password }).then((response) => {
+      if (response.data.token) {
+        let tokenArr = response.data.token.split(" ");
+        const token = tokenArr.pop().toString();
+        localStorage.setItem("id_token", token);
+        this.props.history.push("/home");
+      } else {
+        this.setState({
+          ...this.state,
+          message: "User doesn't exist, if you are a Student contact your Teacher",
+          severity: "error",
+          open: true,
+        });
+      }
+    });
   };
 
   render() {
@@ -119,16 +95,6 @@ class SignIn extends Component {
               Sign In
             </Typography>
             <form noValidate>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.isStudent}
-                    onChange={this.handleChange}
-                    name="isStudent"
-                  />
-                }
-                label="Student"
-              />
               <TextField
                 onChange={this.handleInputChange}
                 margin="normal"

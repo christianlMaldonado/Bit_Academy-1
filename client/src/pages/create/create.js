@@ -28,10 +28,10 @@ class Create extends Component {
     if (!jwt) {
       this.props.history.push("/");
     }
-    API.teacherPortal(jwt)
+    API.userPortal(jwt)
       .then((res) => {
         this.setState({
-          user: res.data.teacher,
+          user: res.data,
         });
       })
       .catch((err) => {
@@ -84,6 +84,7 @@ class Create extends Component {
       email: this.state.email,
       username: `${this.state.firstName} ${this.state.lastName}`,
       password: this.state.password,
+      teacherId: this.state.user.id,
     };
     API.addStudent(student).then((err, res) => {
       if (err) {
@@ -106,7 +107,7 @@ class Create extends Component {
   };
   render() {
     if (this.state.user !== undefined) {
-      return !this.state.user.isStudent ? (
+      return !this.state.user.student ? (
         <>
           <div className="title"></div>
           <div className="container">
@@ -117,7 +118,7 @@ class Create extends Component {
                 </Alert>
               </Snackbar>
               <div className="create-title">Create a New Assignment</div>
-              <Form>
+              <Form className="form-container">
                 <Input
                   className="create-input"
                   value={this.state.assignment}
@@ -144,7 +145,7 @@ class Create extends Component {
             <div className="create">
               <div className="create-title">Create a Student Account</div>
 
-              <Form autocomplete="off">
+              <Form className="form-container">
                 <Input
                   className="create-input"
                   value={this.state.firstName}
@@ -166,7 +167,7 @@ class Create extends Component {
                   name="email"
                   placeholder="Student-Email"
                   type="email"
-                  autocomplete="off"
+                  autoComplete="off"
                 />
                 <Input
                   className="create-input"
@@ -175,7 +176,7 @@ class Create extends Component {
                   name="password"
                   placeholder="Password"
                   type="password"
-                  autocomplete="off"
+                  autoComplete="off"
                 />
                 <Btn
                   disabled={!this.state.firstName || !this.state.lastName || !this.state.password}
@@ -193,7 +194,7 @@ class Create extends Component {
           <div className="title">Create</div>
           <div className="container">
             <div className="create">
-              <h3>Sorry {this.state.user.name}, you don't have access to this page</h3>
+              <h3>Sorry {this.state.user.username}, you don't have access to this page</h3>
             </div>
           </div>
         </>

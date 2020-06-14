@@ -4,6 +4,7 @@ import { db } from "../../services/firebase";
 import getJwt from "../../helpers/jwt";
 import "./style.css";
 import { withRouter } from "react-router-dom";
+import { Text, Form, Btn } from "../Form";
 
 class Chat extends Component {
   constructor(props) {
@@ -26,14 +27,15 @@ class Chat extends Component {
     if (!jwt) {
       this.props.history.push("/");
     }
-    API.teacherPortal(jwt)
-      .then((res) =>
+    await API.userPortal(jwt)
+      .then((res) => {
+        console.log(res.data);
         this.setState({
-          user: res.data.teacher.username,
+          user: res.data,
           readError: null,
           loadingChats: true,
-        })
-      )
+        });
+      })
       .catch((err) => {
         this.props.history.push("/");
       });
@@ -48,9 +50,9 @@ class Chat extends Component {
         chats.sort(function(a, b) {
           return a.timestamp - b.timestamp;
         });
-        this.setState({ chats });
+        this.setState({ ...this.state, chats });
         chatArea.scrollBy(0, chatArea.scrollHeight);
-        this.setState({ loadingChats: false });
+        this.setState({ ...this.state, loadingChats: false });
       });
     } catch (error) {
       this.setState({ readError: error.message, loadingChats: false });
@@ -59,6 +61,7 @@ class Chat extends Component {
 
   handleChange(event) {
     this.setState({
+      ...this.state,
       content: event.target.value,
     });
   }
@@ -66,7 +69,7 @@ class Chat extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     console.log("This button is pressed!");
-    this.setState({ writeError: null });
+    this.setState({ ...this.state, writeError: null });
     const chatArea = this.myRef.current;
     try {
       await db.ref("chats").push({
@@ -74,7 +77,7 @@ class Chat extends Component {
         timestamp: Date.now(),
         uid: this.state.user,
       });
-      this.setState({ content: "" });
+      this.setState({ ...this.state, content: "" });
       chatArea.scrollBy(0, chatArea.scrollHeight);
     } catch (error) {
       this.setState({ writeError: error.message });
@@ -89,6 +92,7 @@ class Chat extends Component {
   }
 
   render() {
+    // if (this.state.user !== undefined) {
     return (
       <>
         <div className="chat-container">
@@ -116,25 +120,25 @@ class Chat extends Component {
               );
             })}
           </div>
-          <form onSubmit={this.handleSubmit} className="mx-3">
-            <textarea
+          <Form onSubmit={this.handleSubmit} className="mx-3">
+            <Text
               className="form-control"
               name="content"
               onChange={this.handleChange}
               value={this.state.content}
-            ></textarea>
+            ></Text>
             {this.state.error ? <p className="text-danger">{this.state.error}</p> : null}
-            <button type="submit" className="btn btn-submit px-5 mt-4 chat-submit">
+            <Btn type="submit" className="btn btn-submit px-5 mt-4 chat-submit">
               Send
-            </button>
-          </form>
+            </Btn>
+          </Form>
           <div className="py-5 mx-3">
-            Logged in as: <strong className="text-info">{this.state.user}</strong>
+            Logged in as: <strong className="text-info">{this.state.user.username}</strong>
           </div>
         </div>
       </>
     );
   }
+  // }
 }
-
 export default withRouter(Chat);
