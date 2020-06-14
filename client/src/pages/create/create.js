@@ -118,7 +118,7 @@ class Create extends Component {
                 </Alert>
               </Snackbar>
               <div className="create-title">Create a New Assignment</div>
-              <Form>
+              <Form className="form-container">
                 <Input
                   className="create-input"
                   value={this.state.assignment}
@@ -145,7 +145,7 @@ class Create extends Component {
             <div className="create">
               <div className="create-title">Create a Student Account</div>
 
-              <Form>
+              <Form className="form-container">
                 <Input
                   className="create-input"
                   value={this.state.firstName}

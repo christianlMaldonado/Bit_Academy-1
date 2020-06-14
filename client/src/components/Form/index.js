@@ -1,8 +1,7 @@
 import React from "react";
-import "./style.css";
 
-export function Form({ children }) {
-  return <form className="form-container">{children}</form>;
+export function Form(props) {
+  return <form {...props}>{props.children}</form>;
 }
 
 export function Input(props) {

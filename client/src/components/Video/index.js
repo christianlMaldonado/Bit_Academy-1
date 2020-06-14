@@ -9,7 +9,7 @@ const Row = styled.div`
   width: 100%;
 `;
 
-function App() {
+function Video() {
   const [yourID, setYourID] = useState("");
   const [users, setUsers] = useState({});
   const [stream, setStream] = useState();
@@ -157,4 +157,4 @@ function App() {
   );
 }
 
-export default App;
+export default Video;
