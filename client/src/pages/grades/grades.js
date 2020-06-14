@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./style.css";
 import { Container, Tbl, TBody, Row, Header, Cell } from "../../components/tables/index";
 import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
 import API from "../../utilities/API";
 import getJwt from "../../helpers/jwt";
 import Loading from "../../components/loading/loading";
@@ -27,6 +26,7 @@ class Grades extends Component {
         this.setState({
           user: res.data,
         });
+        this.seeGrades(this.state.user.id);
       })
       .catch((err) => {
         localStorage.removeItem("id_token");
@@ -73,7 +73,7 @@ class Grades extends Component {
                             <Cell key={homework.assignment.name}>
                               <b>{homework.assignment.name}</b>
                             </Cell>
-                            <Cell align="right" key={homework.assignment.link}>
+                            <Cell align="left" key={homework.assignment.link}>
                               <b>{homework.assignment.link}</b>
                             </Cell>
                             <Cell align="right" key={homework.assignment.grade}>
@@ -86,15 +86,6 @@ class Grades extends Component {
                   </Container>
                 ) : (
                   <>
-                    <Button
-                      className="see-assignments"
-                      variant="contained"
-                      color="primary"
-                      onClick={() => this.seeGrades(this.state.user.id)}
-                      style={{ marginBottom: "40px" }}
-                    >
-                      See Grades
-                    </Button>
                     <Container component={Paper}>
                       <Tbl>
                         <Header>

@@ -36,7 +36,7 @@ export default {
     return axios.get("/student/classWork", student);
   },
   submitHomework: function(homework) {
-    return axios.post("/student/submitClasswork", homework);
+    return axios.put("/student/submitClasswork", homework);
   },
   checkIn: function(student) {
     return axios.put("/student/attendance", student);

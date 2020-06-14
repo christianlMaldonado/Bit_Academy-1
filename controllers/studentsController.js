@@ -2,6 +2,7 @@ const User = require("../models/Users");
 
 module.exports = {
   submitClasswork: function (req, res) {
+    console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.body.user._id },
       { $set: { "classwork.$[elem]._id": req.body.id } },
