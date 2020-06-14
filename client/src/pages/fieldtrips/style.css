@@ -1,0 +1,9 @@
+.fieldtrip {
+  position: absolute;
+  top: 40%;
+  left: 43%;
+  transform: translate(-50%, -50%);
+}
+.coming-soon {
+  color: #718e92;
+}
