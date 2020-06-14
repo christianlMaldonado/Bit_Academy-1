@@ -13,6 +13,7 @@ class Create extends Component {
     this.state = {
       user: undefined,
       assignment: "",
+      kind: "",
       description: "",
       firstName: "",
       lastName: "",
@@ -49,8 +50,11 @@ class Create extends Component {
   handleFormSubmit = (e) => {
     e.preventDefault();
     const schoolwork = {
+      _id: this.state.user.id,
       assignment: this.state.assignment,
+      kind: this.state.kind,
       description: this.state.description,
+      isStudent: true,
     };
     API.addHomework(schoolwork).then((err, res) => {
       if (err) {
@@ -62,6 +66,7 @@ class Create extends Component {
       }
       this.setState({
         assignment: "",
+        kind: "",
         description: "",
         message: "Assignment Added Successfully",
         severity: "success",
@@ -125,6 +130,13 @@ class Create extends Component {
                   onChange={this.handleInputChange}
                   name="assignment"
                   placeholder="Assignment name"
+                />
+                <Input
+                  className="create-input"
+                  value={this.state.kind}
+                  onChange={this.handleInputChange}
+                  name="kind"
+                  placeholder="Kind of Assignment"
                 />
                 <Text
                   value={this.state.description}
