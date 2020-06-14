@@ -15,27 +15,49 @@ const teachers = require("./routes/teachers");
 const students = require("./routes/students");
 const PORT = process.env.PORT || 4200;
 
-const person = {};
+const users = {};
+
+const socketToRoom = {};
+
 io.on("connection", (socket) => {
-  console.log(person);
-  if (!person[socket.id]) {
-    person[socket.id] = socket.id;
-  }
-  socket.emit("yourID", socket.id);
-  io.sockets.emit("allUsers", person);
-  socket.on("disconnect", () => {
-    delete person[socket.id];
+  socket.on("join room", (roomID) => {
+    if (users[roomID]) {
+      const length = users[roomID].length;
+      if (length === 4) {
+        socket.emit("room full");
+        return;
+      }
+      users[roomID].push(socket.id);
+    } else {
+      users[roomID] = [socket.id];
+    }
+    socketToRoom[socket.id] = roomID;
+    const usersInThisRoom = users[roomID].filter((id) => id !== socket.id);
+
+    socket.emit("all users", usersInThisRoom);
   });
 
-  socket.on("callUser", (data) => {
-    io.to(data.userToCall).emit("hey", {
-      signal: data.signalData,
-      from: data.from,
+  socket.on("sending signal", (payload) => {
+    io.to(payload.userToSignal).emit("user joined", {
+      signal: payload.signal,
+      callerID: payload.callerID,
     });
   });
 
-  socket.on("acceptCall", (data) => {
-    io.to(data.to).emit("callAccepted", data.signal);
+  socket.on("returning signal", (payload) => {
+    io.to(payload.callerID).emit("receiving returned signal", {
+      signal: payload.signal,
+      id: socket.id,
+    });
+  });
+
+  socket.on("disconnect", () => {
+    const roomID = socketToRoom[socket.id];
+    let room = users[roomID];
+    if (room) {
+      room = room.filter((id) => id !== socket.id);
+      users[roomID] = room;
+    }
   });
 });
 
@@ -82,54 +104,3 @@ app.get("*", (req, res) => {
 server.listen(PORT, () => {
   console.log(`🌏 server on http://localhost:${PORT}`);
 });
-
-// require('dotenv').config();
-// const express = require("express");
-// const http = require("http");
-// const app = express();
-// const server = http.createServer(app);
-// const socket = require("socket.io");
-// const io = socket(server);
-
-// const users = {};
-
-// const socketToRoom = {};
-
-// io.on('connection', socket => {
-//     socket.on("join room", roomID => {
-//         if (users[roomID]) {
-//             const length = users[roomID].length;
-//             if (length === 4) {
-//                 socket.emit("room full");
-//                 return;
-//             }
-//             users[roomID].push(socket.id);
-//         } else {
-//             users[roomID] = [socket.id];
-//         }
-//         socketToRoom[socket.id] = roomID;
-//         const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
-
-//         socket.emit("all users", usersInThisRoom);
-//     });
-
-//     socket.on("sending signal", payload => {
-//         io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
-//     });
-
-//     socket.on("returning signal", payload => {
-//         io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
-//     });
-
-//     socket.on('disconnect', () => {
-//         const roomID = socketToRoom[socket.id];
-//         let room = users[roomID];
-//         if (room) {
-//             room = room.filter(id => id !== socket.id);
-//             users[roomID] = room;
-//         }
-//     });
-
-// });
-
-// server.listen(process.env.PORT || 8000, () => console.log('server is running on port 8000'));
