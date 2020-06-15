@@ -60,6 +60,14 @@
   box-shadow: 0 1px 0 0 rgb(119, 147, 172) !important;
 }
 
+select {
+  display: block;
+  background-color: white !important;
+  margin-bottom: 10px;
+  width: 101%;
+  border: 1px lightgray solid !important;
+}
+
 textarea {
   width: 101%;
   height: 25vh;

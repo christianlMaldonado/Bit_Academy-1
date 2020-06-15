@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import "./style.css";
 import { Container, Tbl, TBody, Row, Header, Cell } from "../../components/tables/index";
 import Paper from "@material-ui/core/Paper";
+import Loading from "../../components/loading/loading";
 import API from "../../utilities/API";
 import getJwt from "../../helpers/jwt";
-import Loading from "../../components/loading/loading";
+import averageGrades from "../../helpers/gpa";
+import "./style.css";
 
 class Grades extends Component {
   constructor(props) {
@@ -60,6 +61,9 @@ class Grades extends Component {
                             <b>Assignment</b>
                           </Cell>
                           <Cell>
+                            <b>Assignment Type</b>
+                          </Cell>
+                          <Cell>
                             <b>Link</b>
                           </Cell>
                           <Cell align="right">
@@ -70,17 +74,30 @@ class Grades extends Component {
                       <TBody>
                         {this.state.user.classwork.map((homework) => (
                           <Row key={homework.assignment._id}>
-                            <Cell key={homework.assignment.name}>
-                              <b>{homework.assignment.name}</b>
+                            <Cell>
+                              <b key={homework.assignment.name}>{homework.assignment.name}</b>
                             </Cell>
-                            <Cell align="left" key={homework.assignment.link}>
-                              <b>{homework.assignment.link}</b>
+                            <Cell>
+                              <b key={homework.assignment.kind}>{homework.assignment.kind}</b>
                             </Cell>
-                            <Cell align="right" key={homework.assignment.grade}>
-                              <b>{homework.assignment.grade}</b>
+                            <Cell>
+                              <b key={homework.assignment.link}>{homework.assignment.link}</b>
+                            </Cell>
+                            <Cell align="right">
+                              <b key={homework.assignment.grade}>{homework.assignment.grade}%</b>
                             </Cell>
                           </Row>
                         ))}
+                        <Row>
+                          <Cell></Cell>
+                          <Cell></Cell>
+                          <Cell>
+                            <b>Average</b>
+                          </Cell>
+                          <Cell align="right">
+                            <b>{averageGrades(this.state.user.classwork)}%</b>
+                          </Cell>
+                        </Row>
                       </TBody>
                     </Tbl>
                   </Container>
@@ -95,6 +112,9 @@ class Grades extends Component {
                             </Cell>
                             <Cell>
                               <b>Assignment</b>
+                            </Cell>
+                            <Cell>
+                              <b>Assignment Type</b>
                             </Cell>
                             <Cell>
                               <b>Link</b>
@@ -116,16 +136,19 @@ class Grades extends Component {
                                     <b>{assignment.assignment.name}</b>
                                   </Cell>
                                   <Cell>
+                                    <b>{assignment.assignment.kind}</b>
+                                  </Cell>
+                                  <Cell>
                                     <b>{assignment.assignment.link}</b>
                                   </Cell>
                                   <Cell align="right">
-                                    <b>{assignment.assignment.grade}</b>
+                                    <b>{assignment.assignment.grade}%</b>
                                   </Cell>
                                 </Row>
                               ));
                             })
                           ) : (
-                            <Row></Row>
+                            <Row />
                           )}
                         </TBody>
                       </Tbl>
