@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./style-create.css";
-import { Form, Input, Text, Btn } from "../../components/Form";
+import { Form, Input, Text, Btn, DropDown, Choices } from "../../components/Form";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "../../components/Alert";
 import API from "../../utilities/API";
@@ -56,6 +56,7 @@ class Create extends Component {
       description: this.state.description,
       isStudent: true,
     };
+    console.log(schoolwork);
     API.addHomework(schoolwork).then((err, res) => {
       if (err) {
         this.setState({
@@ -131,13 +132,12 @@ class Create extends Component {
                   name="assignment"
                   placeholder="Assignment name"
                 />
-                <Input
-                  className="create-input"
-                  value={this.state.kind}
-                  onChange={this.handleInputChange}
-                  name="kind"
-                  placeholder="Kind of Assignment"
-                />
+                <DropDown name="kind" onChange={this.handleInputChange}>
+                  <Choices value={this.state.kind}>--Please Choose an Option--</Choices>
+                  <Choices value="exam">exam</Choices>
+                  <Choices value="homework">homework</Choices>
+                  <Choices value="quiz">quiz</Choices>
+                </DropDown>
                 <Text
                   value={this.state.description}
                   onChange={this.handleInputChange}
